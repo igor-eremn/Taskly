@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - taskly-network
+
+  worker:
+    build: ./worker
+    depends_on:
+      - backend
+    volumes:
+      - ./worker:/app
+      - /app/node_modules
+    networks:
+      - taskly-network
+
+networks:
+  taskly-network:
